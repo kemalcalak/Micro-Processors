@@ -1,0 +1,17 @@
+#include <main.h>
+
+void main()
+{
+   set_tris_a(0xff);
+   set_tris_b(0xff);
+   set_tris_c(0x00);
+   int sayilar[10]={0b00111111,0b00000110,0b01011011,0b01001111,0b01100110,0b01101101,0b01111101,0b00000111,0b01111111,0b01101111};
+   int sayi=1,a,b,c;
+   while(TRUE)
+   {
+     output_c(0b00010011);
+     output_c(0b00100000);
+     output_c(0b01000111);
+   }
+
+}

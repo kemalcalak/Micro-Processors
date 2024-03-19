@@ -1,0 +1,22 @@
+#include <main.h>
+
+
+
+
+void main()
+{
+   set_tris_b(0x00);
+   set_tris_a(0xff);
+   output_b(0x00);
+   int a=0;
+   while(TRUE)
+   {
+      if(input(pin_A1)==1){
+         a++;
+         delay_ms(500);
+      }
+      if(a==5){
+         output_high(pin_B4);
+      }
+   }
+}

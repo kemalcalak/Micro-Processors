@@ -1,0 +1,25 @@
+#include <main.h>
+
+void main()
+{
+   set_tris_a(0xff);
+   set_tris_b(0xff);
+   set_tris_c(0x00);
+   
+   int sifir=0b00111111;
+   int bir=0b00000110;
+   int iki=0b01011011;
+   int uc=0b01001111;
+   int dort=0b01100110;
+   int bes=0b01101101;
+   int alti=0b01111101;
+   int yedi=0b00000111;
+   int sekiz=0b01111111;
+   int dokuz=0b01101111;
+   int sayilar={sifir,bir,iki,uc,dort,bes,alti,yedi,sekiz,dokuz};
+   while(TRUE)
+   {
+      
+   }
+
+}

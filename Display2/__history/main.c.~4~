@@ -1,0 +1,86 @@
+#include <main.h>
+
+void main()
+{
+   set_tris_a(0xff);
+   set_tris_b(0xff);
+   set_tris_c(0x00);
+   int sayilar[10]={0b00111111,0b00000110,0b01011011,0b01001111,0b01100110,0b01101101,0b01111101,0b00000111,0b01111111,0b01101111};
+   int sayi=0,a,b,c;
+   while(TRUE)
+   {
+      while(sayi<1000){
+         a=sayi%100;
+         b=(sayi-(a*100))%10;
+         c=sayi-(a*100+b*10)
+         switch(a){
+            case 0:
+            break;
+            case 1:
+            break;
+            case 2:
+            break;
+            case 3:
+            break;
+            case 4:
+            break;
+            case 5:
+            break;
+            case 6:
+            break;
+            case 7:
+            break;
+            case 8:
+            break;
+            case 9:
+            break;
+         }
+         switch(b){
+            case 0:
+            break;
+            case 1:
+            break;
+            case 2:
+            break;
+            case 3:
+            break;
+            case 4:
+            break;
+            case 5:
+            break;
+            case 6:
+            break;
+            case 7:
+            break;
+            case 8:
+            break;
+            case 9:
+            break;
+         }
+         switch(c){
+            case 0:
+            break;
+            case 1:
+            break;
+            case 2:
+            break;
+            case 3:
+            break;
+            case 4:
+            break;
+            case 5:
+            break;
+            case 6:
+            break;
+            case 7:
+            break;
+            case 8:
+            break;
+            case 9:
+            break;
+         }
+         delay_ms(1000);
+      }
+   }
+
+}

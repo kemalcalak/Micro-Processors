@@ -1,0 +1,70 @@
+#include <main.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <time.h>
+
+#define TRUE 1
+
+int main()
+{
+   set_tris_a(0xff);
+   set_tris_c(0x00);
+   output_c(0x00);
+   set_tris_d(0x00);
+   output_d(0x00);
+
+   srand(time(NULL)); // Rastgele sayý üretimi için tohum belirleme
+
+   while(TRUE)
+   {
+      float volt_oku = ADC_read(0);
+      
+      if(volt_oku >= 4.5 && volt_oku <= 5.5) // Voltajýn belirli bir aralýkta olduðunu kontrol et
+      {
+         int a = rand() % 11 + 2; // 2 ile 12 arasýnda rastgele bir sayý üret
+         
+         switch(a)
+         {
+            case 2:
+               output_high(pin_C3);
+               output_high(pin_D3);
+               break;
+            case 3:
+               output_high(pin_D3);
+               output_high(pin_C2);
+               output_high(pin_C4);
+               break;
+            case 4:
+               output_high(pin_C2);
+               output_high(pin_C4);
+               output_high(pin_D2);
+               output_high(pin_D4);
+               break;
+            // Diðer durumlar buraya eklenebilir
+            default:
+               break;
+         }
+         
+         delay_ms(2000); // LED'lerin yanma süresi
+
+         output_low(pin_C0);
+         output_low(pin_C1);
+         output_low(pin_C2);
+         output_low(pin_C3);
+         output_low(pin_C4);
+         output_low(pin_C5);
+         output_low(pin_C6);
+         output_low(pin_D0);
+         output_low(pin_D1);
+         output_low(pin_D2);
+         output_low(pin_D3);
+         output_low(pin_D4);
+         output_low(pin_D5);
+         output_low(pin_D6);  
+         delay_ms(2000); // LED'lerin söndürülme süresi      
+      }
+   }
+
+   return 0;
+}
+
