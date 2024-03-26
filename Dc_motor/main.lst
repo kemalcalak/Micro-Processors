@@ -1,0 +1,165 @@
+CCS PCM C Compiler, Version 5.007, 61971               26-Mar-24 15:39
+
+               Filename:   C:\Kodlar\Micro-Processors\Dc_motor\main.lst
+
+               ROM used:   100 words (1%)
+                           Largest free fragment is 2048
+               RAM used:   6 (2%) at main() level
+                           7 (2%) worst case
+               Stack used: 0 locations
+               Stack size: 8
+
+*
+0000:  MOVLW  00
+0001:  MOVWF  0A
+0002:  GOTO   019
+0003:  NOP
+.................... #include <main.h> 
+.................... #include <16F877A.h> 
+.................... //////// Standard Header file for the PIC16F877A device //////////////// 
+.................... #device PIC16F877A 
+....................  
+.................... #list 
+....................  
+.................... #device ADC=16 
+....................  
+.................... #FUSES NOWDT                 	//No Watch Dog Timer 
+.................... #FUSES NOBROWNOUT            	//No brownout reset 
+.................... #FUSES NOLVP                 	//No low voltage prgming, B3(PIC16) or B5(PIC18) used for I/O 
+....................  
+.................... #use delay(crystal=4MHz) 
+0004:  MOVLW  22
+0005:  MOVWF  04
+0006:  BCF    03.7
+0007:  MOVF   00,W
+0008:  BTFSC  03.2
+0009:  GOTO   018
+000A:  MOVLW  01
+000B:  MOVWF  78
+000C:  CLRF   77
+000D:  DECFSZ 77,F
+000E:  GOTO   00D
+000F:  DECFSZ 78,F
+0010:  GOTO   00C
+0011:  MOVLW  4A
+0012:  MOVWF  77
+0013:  DECFSZ 77,F
+0014:  GOTO   013
+0015:  GOTO   016
+0016:  DECFSZ 00,F
+0017:  GOTO   00A
+0018:  RETURN
+.................... #use FIXED_IO( B_outputs=PIN_B5,PIN_B4,PIN_B3,PIN_B2,PIN_B1,PIN_B0 ) 
+....................  
+....................  
+....................  
+.................... void main() 
+0019:  BSF    03.5
+001A:  BSF    1F.0
+001B:  BSF    1F.1
+001C:  BSF    1F.2
+001D:  BCF    1F.3
+001E:  MOVLW  07
+001F:  MOVWF  1C
+0020:  BCF    03.7
+0021:  MOVLW  1F
+0022:  ANDWF  03,F
+.................... { 
+....................    set_tris_A(0xff); 
+0023:  MOVLW  FF
+0024:  MOVWF  05
+....................    set_tris_B(0x00); 
+0025:  MOVLW  00
+0026:  MOVWF  06
+....................    output_b(0x00); 
+0027:  MOVLW  C0
+0028:  MOVWF  06
+0029:  BCF    03.5
+002A:  CLRF   06
+....................    int sayac=0; 
+002B:  CLRF   21
+....................    while(TRUE) 
+....................    { 
+....................       if(sayac<10){ 
+002C:  MOVF   21,W
+002D:  SUBLW  09
+002E:  BTFSS  03.0
+002F:  GOTO   036
+....................           
+....................          output_b(0b00011000); 
+0030:  MOVLW  C0
+0031:  BSF    03.5
+0032:  MOVWF  06
+0033:  MOVLW  18
+0034:  BCF    03.5
+0035:  MOVWF  06
+....................       } 
+....................       if(input(pin_A0)==1){ 
+0036:  BSF    03.5
+0037:  BSF    05.0
+0038:  BCF    03.5
+0039:  BTFSS  05.0
+003A:  GOTO   03F
+....................          delay_ms(100); 
+003B:  MOVLW  64
+003C:  MOVWF  22
+003D:  CALL   004
+....................          sayac++; 
+003E:  INCF   21,F
+....................       } 
+....................       if(sayac==10){ 
+003F:  MOVF   21,W
+0040:  SUBLW  0A
+0041:  BTFSS  03.2
+0042:  GOTO   04C
+....................          delay_ms(40); 
+0043:  MOVLW  28
+0044:  MOVWF  22
+0045:  CALL   004
+....................          output_b(0b00000101); 
+0046:  MOVLW  C0
+0047:  BSF    03.5
+0048:  MOVWF  06
+0049:  MOVLW  05
+004A:  BCF    03.5
+004B:  MOVWF  06
+....................       } 
+....................       if(input(pin_A1)==1){ 
+004C:  BSF    03.5
+004D:  BSF    05.1
+004E:  BCF    03.5
+004F:  BTFSS  05.1
+0050:  GOTO   055
+....................          delay_ms(40); 
+0051:  MOVLW  28
+0052:  MOVWF  22
+0053:  CALL   004
+....................          sayac--; 
+0054:  DECF   21,F
+....................       } 
+....................        
+....................       if(input(pin_A2)==1){ 
+0055:  BSF    03.5
+0056:  BSF    05.2
+0057:  BCF    03.5
+0058:  BTFSS  05.2
+0059:  GOTO   062
+....................          delay_ms(40); 
+005A:  MOVLW  28
+005B:  MOVWF  22
+005C:  CALL   004
+....................          output_b(0b00000000); 
+005D:  MOVLW  C0
+005E:  BSF    03.5
+005F:  MOVWF  06
+0060:  BCF    03.5
+0061:  CLRF   06
+....................       } 
+0062:  GOTO   02C
+....................    } 
+....................  
+.................... } 
+0063:  SLEEP
+
+Configuration Fuses:
+   Word  1: 3F31   XT NOWDT PUT NOBROWNOUT NOLVP NOCPD NOWRT NODEBUG NOPROTECT

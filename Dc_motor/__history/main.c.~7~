@@ -1,0 +1,24 @@
+#include <main.h>
+
+void main()
+{
+   set_tris_A(0xff);
+   set_tris_B(0x00);
+   output_b(0x00);
+   int sayac=0;
+   while(TRUE)
+   {
+      if(input(pin_A0)==1){
+         output_b(0b00000101);
+         sayac+=1;
+         delay_ms(100);
+      }
+      if(sayac==10){
+         output_b(0b00000000);
+         output_b(0b00001100);
+         
+         delay_ms(100);
+      }
+   }
+
+}
