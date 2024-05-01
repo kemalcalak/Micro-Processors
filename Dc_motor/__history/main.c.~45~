@@ -16,7 +16,7 @@ void main()
          delay_ms(200);
          sayac++;
       }
-      if(sayac==3){
+      if(sayac==10){
          delay_ms(100);
          output_b(0b00000101);
       }

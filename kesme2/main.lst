@@ -1,0 +1,256 @@
+CCS PCH C Compiler, Version 5.007, 61971               29-Nis-24 16:00
+
+               Filename:   C:\Kodlar\Micro-Processors\kesme2\main.lst
+
+               ROM used:   404 bytes (1%)
+                           Largest free fragment is 32360
+               RAM used:   24 (2%) at main() level
+                           27 (2%) worst case
+               Stack used: 1 locations (0 in main + 1 for interrupts)
+               Stack size: 31
+
+*
+0000:  GOTO   0138
+*
+0008:  MOVWF  04
+000A:  MOVFF  FD8,05
+000E:  MOVFF  FE0,06
+0012:  MOVLB  0
+0014:  MOVFF  FE9,0C
+0018:  MOVFF  FEA,07
+001C:  MOVFF  FE1,08
+0020:  MOVFF  FE2,09
+0024:  MOVFF  FD9,0A
+0028:  MOVFF  FDA,0B
+002C:  MOVFF  FF3,12
+0030:  MOVFF  FF4,13
+0034:  MOVFF  FFA,14
+0038:  MOVFF  00,0E
+003C:  MOVFF  01,0F
+0040:  MOVFF  02,10
+0044:  MOVFF  03,11
+0048:  BTFSS  FF2.3
+004A:  GOTO   0054
+004E:  BTFSC  FF2.0
+0050:  GOTO   00BE
+0054:  MOVFF  0E,00
+0058:  MOVFF  0F,01
+005C:  MOVFF  10,02
+0060:  MOVFF  11,03
+0064:  MOVFF  0C,FE9
+0068:  MOVFF  07,FEA
+006C:  BSF    07.7
+006E:  MOVFF  08,FE1
+0072:  MOVFF  09,FE2
+0076:  MOVFF  0A,FD9
+007A:  MOVFF  0B,FDA
+007E:  MOVFF  12,FF3
+0082:  MOVFF  13,FF4
+0086:  MOVFF  14,FFA
+008A:  MOVF   04,W
+008C:  MOVFF  06,FE0
+0090:  MOVFF  05,FD8
+0094:  RETFIE 0
+.................... #include <main.h> 
+.................... #include <18F452.h> 
+.................... //////// Standard Header file for the PIC18F452 device //////////////// 
+.................... #device PIC18F452 
+....................  
+.................... #list 
+....................  
+.................... #device ADC=16 
+....................  
+.................... #FUSES NOWDT                 	//No Watch Dog Timer 
+.................... #FUSES WDT128                	//Watch Dog Timer uses 1:128 Postscale 
+.................... #FUSES NOBROWNOUT            	//No brownout reset 
+.................... #FUSES NOLVP                 	//No low voltage prgming, B3(PIC16) or B5(PIC18) used for I/O 
+....................  
+.................... #use delay(crystal=4MHz) 
+0096:  CLRF   FEA
+0098:  MOVLW  1A
+009A:  MOVWF  FE9
+009C:  MOVF   FEF,W
+009E:  BZ    00BC
+00A0:  MOVLW  01
+00A2:  MOVWF  01
+00A4:  CLRF   00
+00A6:  DECFSZ 00,F
+00A8:  BRA    00A6
+00AA:  DECFSZ 01,F
+00AC:  BRA    00A4
+00AE:  MOVLW  4A
+00B0:  MOVWF  00
+00B2:  DECFSZ 00,F
+00B4:  BRA    00B2
+00B6:  BRA    00B8
+00B8:  DECFSZ FEF,F
+00BA:  BRA    00A0
+00BC:  RETURN 0
+....................  
+....................  
+....................  
+.................... #INT_RB 
+.................... void  RB_isr(void)  
+.................... { 
+....................    output_c(0x00); 
+00BE:  CLRF   F94
+00C0:  CLRF   F8B
+....................      if(input(pin_B4)) 
+00C2:  BSF    F93.4
+00C4:  BTFSS  F81.4
+00C6:  BRA    00DE
+....................      { 
+....................          output_high(pin_C4); 
+00C8:  BCF    F94.4
+00CA:  BSF    F8B.4
+....................          delay_ms(5000); 
+00CC:  MOVLW  14
+00CE:  MOVWF  19
+00D0:  MOVLW  FA
+00D2:  MOVWF  1A
+00D4:  RCALL  0096
+00D6:  DECFSZ 19,F
+00D8:  BRA    00D0
+....................          output_low(pin_C4); 
+00DA:  BCF    F94.4
+00DC:  BCF    F8B.4
+....................      } 
+....................      if(input(pin_B5)) 
+00DE:  BSF    F93.5
+00E0:  BTFSS  F81.5
+00E2:  BRA    00FA
+....................      { 
+....................          output_high(pin_C5); 
+00E4:  BCF    F94.5
+00E6:  BSF    F8B.5
+....................          delay_ms(5000); 
+00E8:  MOVLW  14
+00EA:  MOVWF  19
+00EC:  MOVLW  FA
+00EE:  MOVWF  1A
+00F0:  RCALL  0096
+00F2:  DECFSZ 19,F
+00F4:  BRA    00EC
+....................          output_low(pin_C5); 
+00F6:  BCF    F94.5
+00F8:  BCF    F8B.5
+....................      } 
+....................      if(input(pin_B6)) 
+00FA:  BSF    F93.6
+00FC:  BTFSS  F81.6
+00FE:  BRA    0116
+....................      { 
+....................          output_high(pin_C6); 
+0100:  BCF    F94.6
+0102:  BSF    F8B.6
+....................          delay_ms(5000); 
+0104:  MOVLW  14
+0106:  MOVWF  19
+0108:  MOVLW  FA
+010A:  MOVWF  1A
+010C:  RCALL  0096
+010E:  DECFSZ 19,F
+0110:  BRA    0108
+....................          output_low(pin_C6); 
+0112:  BCF    F94.6
+0114:  BCF    F8B.6
+....................      } 
+....................      if(input(pin_B7)) 
+0116:  BSF    F93.7
+0118:  BTFSS  F81.7
+011A:  BRA    0132
+....................      { 
+....................          output_high(pin_C7); 
+011C:  BCF    F94.7
+011E:  BSF    F8B.7
+....................          delay_ms(5000); 
+0120:  MOVLW  14
+0122:  MOVWF  19
+0124:  MOVLW  FA
+0126:  MOVWF  1A
+0128:  RCALL  0096
+012A:  DECFSZ 19,F
+012C:  BRA    0124
+....................          output_low(pin_C7); 
+012E:  BCF    F94.7
+0130:  BCF    F8B.7
+....................      } 
+0132:  BCF    FF2.0
+0134:  GOTO   0054
+.................... } 
+....................  
+.................... void main() 
+0138:  CLRF   FF8
+013A:  BCF    FD0.7
+013C:  BSF    07.7
+013E:  BSF    FC1.0
+0140:  BSF    FC1.1
+0142:  BSF    FC1.2
+0144:  BCF    FC1.3
+.................... { 
+....................     set_tris_b(0xff); 
+0146:  MOVLW  FF
+0148:  MOVWF  F93
+....................     set_tris_c(0x00); 
+014A:  MOVLW  00
+014C:  MOVWF  F94
+....................     output_c(0x00); 
+014E:  CLRF   F94
+0150:  CLRF   F8B
+....................  
+....................    enable_interrupts(INT_RB); 
+0152:  BSF    FF2.3
+....................    enable_interrupts(GLOBAL); 
+0154:  MOVLW  C0
+0156:  IORWF  FF2,F
+....................  
+....................    while(TRUE) 
+....................    { 
+....................       output_c(0xff); 
+0158:  CLRF   F94
+015A:  SETF   F8B
+....................       delay_ms(1000); 
+015C:  MOVLW  04
+015E:  MOVWF  17
+0160:  CLRF   16
+0162:  BTFSC  FF2.7
+0164:  BSF    16.7
+0166:  BCF    FF2.7
+0168:  MOVLW  FA
+016A:  MOVWF  1A
+016C:  RCALL  0096
+016E:  BTFSC  16.7
+0170:  BSF    FF2.7
+0172:  DECFSZ 17,F
+0174:  BRA    0160
+....................       output_c(0x00); 
+0176:  CLRF   F94
+0178:  CLRF   F8B
+....................       delay_ms(1000); 
+017A:  MOVLW  04
+017C:  MOVWF  17
+017E:  CLRF   16
+0180:  BTFSC  FF2.7
+0182:  BSF    16.7
+0184:  BCF    FF2.7
+0186:  MOVLW  FA
+0188:  MOVWF  1A
+018A:  RCALL  0096
+018C:  BTFSC  16.7
+018E:  BSF    FF2.7
+0190:  DECFSZ 17,F
+0192:  BRA    017E
+0194:  BRA    0158
+....................    } 
+....................  
+.................... } 
+0196:  SLEEP 
+
+Configuration Fuses:
+   Word  1: 2100   XT NOOSCSEN
+   Word  2: 0E0C   PUT NOBROWNOUT BORV20 NOWDT WDT128
+   Word  3: 0100   CCP2C1
+   Word  4: 0081   STVREN NOLVP NODEBUG
+   Word  5: C00F   NOPROTECT NOCPB NOCPD
+   Word  6: E00F   NOWRT NOWRTC NOWRTB NOWRTD
+   Word  7: 400F   NOEBTR NOEBTRB
